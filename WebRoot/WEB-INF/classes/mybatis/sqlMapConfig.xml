@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<!-- 设置别名，自动扫描包中的类，别名为类名，首字母大小写均可 -->
+	<typeAliases>
+		<package name="cn.parker.ssm.po"/>
+	</typeAliases>
+
+</configuration>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.parker.ssm.mapper.ItemsMapperCustom">
+
+	<!-- 定义商品查询的sql片段，查询条件 -->
+	<sql id="query_item_where">
+		<!-- 商品查询条件通过ItemsQueryVo包装对象中的itemsCustom属性传递 -->
+		<if test="itemsCustom!=null">
+			<if test="itemsCustom.name!=null and itemsCustom.name!='' ">
+				name like '%${itemsCustom.name}%'
+			</if>
+		</if>
+	</sql>
+
+	<select id="findItemList" parameterType="cn.parker.ssm.po.ItemsQueryVo"
+		resultType="cn.parker.ssm.po.ItemsCustom">
+		SELECT * from items
+		<where>
+			<include refid="query_item_where"></include>
+		</where>
+	</select>
+
+
+</mapper>
