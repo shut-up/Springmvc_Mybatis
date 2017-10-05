@@ -10,5 +10,5 @@ import cn.parker.ssm.po.ItemsExample;
 import cn.parker.ssm.po.ItemsQueryVo;
 
 public interface ItemsMapperCustom {
-    public List<ItemsCustom> findItemList(ItemsQueryVo itemsQueryVo) throws Exception;
+    public List<ItemsCustom> findItemList(ItemsQueryVo itemsQueryVo)throws Exception;
 }

@@ -4,16 +4,24 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-			http://www.springframework.org/schema/beans/spring-beans-3.2.xsd    
+			http://www.springframework.org/schema/beans/spring-beans-4.0.xsd    
             http://www.springframework.org/schema/context 
-            http://www.springframework.org/schema/context/spring-context-3.2.xsd    
+            http://www.springframework.org/schema/context/spring-context-4.0.xsd    
             http://www.springframework.org/schema/mvc 
-            http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd    
+            http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd    
             http://www.springframework.org/schema/util 
-            http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+            http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
-	<!-- 可以扫描controller、service、... 这里让扫描controller，指定controller的包 -->
+	<!-- 主键扫描：可以扫描controller、service、... 这里让扫描controller，指定controller的包 -->
 	<context:component-scan base-package="cn.parker.ssm.controller"></context:component-scan>
+	<!-- <context:component-scan base-package="cn.parker.ssm.service.impl"></context:component-scan> -->
+
+	<!-- 注解的处理器适配器 -->
+	<!-- <bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" /> -->
+	<!-- 注解的处理器映射器 -->
+	<!-- <bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" /> -->
 
 	<!-- 使用mvc:annotation-driven可以代替上方适配器和映射器的配置 且mvc:annotation-driven默认加载很多参数绑定方法，如默认加载json转换解析器 
 		推荐开发使用 -->
