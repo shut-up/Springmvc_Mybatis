@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.parker.ssm.po.Items;
@@ -68,9 +69,18 @@ public class ItemsController {
 	 */
 	//限制请求方法为post和get(如果限制方法为post方法则会报错，因为这里请求为get方法)
 	@RequestMapping(value="/editItems", method={RequestMethod.POST,RequestMethod.GET})
-	public String editItems(Model model) throws Exception {
+	//简单类型参数绑定，方法形参的名字必须和request中的属性名一致，不推荐使用,推荐使用@requestParam
+	//public String editItems(Model model,Integer id) throws Exception {
+	/*
+	 * 使用@requestParam
+	 * value：指定request传入参数与形参进行绑定
+	 * required：指定参数是否必须传入
+	 * defaultValue：如果没有参数传入时，使用默认值
+	 */
+	
+	public String editItems(Model model,@RequestParam(value="id",required=true,defaultValue="")Integer items_id) throws Exception {	
 		
-		ItemsCustom itemsCustom = itemsService.findItemsById(1);
+		ItemsCustom itemsCustom = itemsService.findItemsById(items_id);
 		
 		//相当于modelAndView.addObject方法
 		model.addAttribute("itemsCustom", itemsCustom);
