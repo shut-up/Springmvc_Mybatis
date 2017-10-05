@@ -47,7 +47,7 @@ public class ItemsServiceImpl implements ItemsService{
 		//检验id是否为空，空就抛出异常（暂不实现）
 		
 		itemsCustom.setId(id);
-		//更新商品信息收银员updateByPrimaryKeyWithBLOBs，根据id更新Items表中所有字段，包括大文本类型
+		//更新商品信息使用updateByPrimaryKeyWithBLOBs，根据id更新Items表中所有字段，包括大文本类型
 		//updateByPrimaryKeyWithBLOBs要去必须传入id
 		itemsMapper.updateByPrimaryKeyWithBLOBs(itemsCustom);
 	}
