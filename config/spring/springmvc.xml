@@ -25,7 +25,7 @@
 
 	<!-- 使用mvc:annotation-driven可以代替上方适配器和映射器的配置 且mvc:annotation-driven默认加载很多参数绑定方法，如默认加载json转换解析器 
 		推荐开发使用 -->
-	<mvc:annotation-driven></mvc:annotation-driven>
+	<mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
 
 	<!-- 视图解析器 解析jsp视图，默认使用jstl标签，classpath必须有就是jstl的包 -->
 	<bean
@@ -35,6 +35,13 @@
 		<property name="suffix" value=".jsp"></property>
 	</bean>
 	
-
+	<!-- 自定义参数绑定 -->
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="converters">
+			<list>
+				<bean class="cn.parker.ssm.controller.converter.CustomDateConverter"></bean>
+			</list>
+		</property>
+	</bean>
 
 </beans>
