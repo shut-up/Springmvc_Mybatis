@@ -149,7 +149,12 @@ public class ItemsController {
 	@RequestMapping("/editItemsAllSubmit")
 	//通过itemsQueryVo接收批量修改提交的商品信息，存储在itemsQueryVo的edititemsList属性中
 	//使用List接收页面提交的批量数据，通过包装pojo接收，在包装polo中定义list<pojo>属性
-	public String editItemsAllSubmit(ItemsQueryVo itemsQueryVo){
+	public String editItemsAllSubmit(ItemsQueryVo itemsQueryVo) throws Exception{
+		for(int i=0;i<itemsQueryVo.getEdititemsList().size();i++){
+			ItemsCustom itemsCustom = itemsQueryVo.getEdititemsList().get(i);
+			Integer id = itemsCustom.getId();
+			itemsService.updateItems(id, itemsCustom);
+		}
 		
 		
 		return "success";

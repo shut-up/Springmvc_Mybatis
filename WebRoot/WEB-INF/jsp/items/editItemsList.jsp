@@ -39,8 +39,9 @@
 	<td>操作</td>
 </tr>
 <c:forEach items="${itemsList }" var="item" varStatus="status">
-	<input type="hidden" name="edititemsList[${status.index }].id" value="${item.id }"/>
+	
 <tr>
+	<input type="hidden" name="edititemsList[${status.index }].id" value="${item.id }"/>
 	<td><input name="edititemsList[${status.index }].name" value="${item.name }"/></td>
 	<td><input name="edititemsList[${status.index }].price" value="${item.price }"/></td>
 	<td><input name="edititemsList[${status.index }].createtime" value="<fmt:formatDate value="${item.createtime}" pattern="yyyy-MM-dd HH:mm:ss"/>"/></td>
