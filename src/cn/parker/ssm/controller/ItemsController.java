@@ -137,6 +137,8 @@ public class ItemsController {
 			  }
 			  //将错误信息传到页面
 			  model.addAttribute("allErrors", allErrors);
+			  //直接使用model将pojo回显到页面
+			  model.addAttribute("items", itemsCustom);
 			  //有错误信息则重新返回到此页
 			  return "items/editItems";
 		}
