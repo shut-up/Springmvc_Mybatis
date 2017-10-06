@@ -5,12 +5,15 @@ import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import cn.parker.ssm.controller.validtorGroup.ValidGroup1;
+
 public class Items {
     private Integer id;
     
     //校验商品名称在1-30个字符之间，message为提示校验的错误信息，
     //items.name.length.error在CustomValidationMessages.properties配置具体错误信息
-    @Size(min=1,max=30,message="{items.name.length.error}")
+    //groups=(ValidGroup1.class)指定此校验规则属于ValidGroup1分组，可以同时定义属于多个分组
+    @Size(min=1,max=30,message="{items.name.length.error}",groups=(ValidGroup1.class))
     private String name;
 
     private Float price;

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.parker.ssm.controller.validtorGroup.ValidGroup1;
 import cn.parker.ssm.po.Items;
 import cn.parker.ssm.po.ItemsCustom;
 import cn.parker.ssm.po.ItemsQueryVo;
@@ -106,8 +107,9 @@ public class ItemsController {
 	 */
 	//在需要校验的pojo前边添加@Validated，在需要校验的pojo后边添加BindingResult bindingResult接收校验出错信息
 	//注意：@Validated和BindingResult bindingResult是配对出现，并且形参顺序是固定的（一前一后）。
+	//@Validated(value={ValidGroup1.class})指定使用ValidGroup1校验规则，即仅校验商品名长度
 	@RequestMapping("/editItemsSubmit")
-	public String editItemsSubmit(HttpServletRequest request,Model model, Integer id,@Validated ItemsCustom itemsCustom,BindingResult bindingResult) throws Exception {
+	public String editItemsSubmit(HttpServletRequest request,Model model, Integer id,@Validated(value={ValidGroup1.class}) ItemsCustom itemsCustom,BindingResult bindingResult) throws Exception {
 
 		//判断是否有错误信息
 		if(bindingResult.hasErrors()){
