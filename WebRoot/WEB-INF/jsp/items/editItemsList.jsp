@@ -39,6 +39,7 @@
 	<td>操作</td>
 </tr>
 <c:forEach items="${itemsList }" var="item" varStatus="status">
+	<input type="hidden" name="edititemsList[${status.index }].id" value="${item.id }"/>
 <tr>
 	<td><input name="edititemsList[${status.index }].name" value="${item.name }"/></td>
 	<td><input name="edititemsList[${status.index }].price" value="${item.price }"/></td>
