@@ -24,9 +24,16 @@
 查询条件：
 <table width="100%" border=1>
 <tr>
-<td><input name="itemsCustom.name"/></td>
-<td><input type="button" value="查询" onclick="query_items()"/></td>
-<td><input type="button" value="批量删除" onclick="delete_items()"/></td>
+<td>商品名称：<input name="itemsCustom.name"/>
+商品类型：
+<select name="itemtype">
+	<c:forEach items="${itemsTypes}" var="itemtype">
+		<option value="${itemtype.key }">${itemtype.value }</option>
+	</c:forEach>
+</select>
+<input type="button" value="查询" onclick="query_items()"/>
+<input type="button" value="批量删除" onclick="delete_items()"/>
+</td>
 </tr>
 </table>
 商品列表：

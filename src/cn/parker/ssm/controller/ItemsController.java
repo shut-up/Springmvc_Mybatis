@@ -1,7 +1,9 @@
 package cn.parker.ssm.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.HttpRequestHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +35,15 @@ import cn.parker.ssm.service.impl.ItemsServiceImpl;
 public class ItemsController {
 	@Autowired
 	private ItemsService itemsService;
+	
+	@ModelAttribute("itemsTypes")
+	public Map<String, String> getItemsType(){
+		Map<String, String> itemsTypes = new HashMap<String, String>();
+		itemsTypes.put("101", "母婴");
+		itemsTypes.put("102", "教育");
+		return itemsTypes;
+
+	}
 
 	/*
 	 * 包装类型的pojo参数绑定，input name的值必须和包装类型的pojo属性的属性名一致
@@ -92,7 +104,7 @@ public class ItemsController {
 		ItemsCustom itemsCustom = itemsService.findItemsById(items_id);
 
 		// 相当于modelAndView.addObject方法
-		model.addAttribute("itemsCustom", itemsCustom);
+		model.addAttribute("items", itemsCustom);
 
 		return "items/editItems";
 	}
@@ -108,8 +120,12 @@ public class ItemsController {
 	//在需要校验的pojo前边添加@Validated，在需要校验的pojo后边添加BindingResult bindingResult接收校验出错信息
 	//注意：@Validated和BindingResult bindingResult是配对出现，并且形参顺序是固定的（一前一后）。
 	//@Validated(value={ValidGroup1.class})指定使用ValidGroup1校验规则，即仅校验商品名长度
+	//	pojo数据传入controller方法后，springmvc自动将pojo数据放到request域（此时默认实现数据回显），key等于pojo类型（首字母小写）
+	//	若页面中显示的数据使用的不是pojo的类型，如value="${items.name }，使用@ModelAttribute指定pojo回显到页面在request中的key
+	//  @ModelAttribute还可以将方法返回值传到页面（本类中第一个方法）
 	@RequestMapping("/editItemsSubmit")
-	public String editItemsSubmit(HttpServletRequest request,Model model, Integer id,@Validated(value={ValidGroup1.class}) ItemsCustom itemsCustom,BindingResult bindingResult) throws Exception {
+	public String editItemsSubmit(HttpServletRequest request,Model model, Integer id,
+			@ModelAttribute("items") @Validated(value={ValidGroup1.class}) ItemsCustom itemsCustom,BindingResult bindingResult) throws Exception {
 
 		//判断是否有错误信息
 		if(bindingResult.hasErrors()){
