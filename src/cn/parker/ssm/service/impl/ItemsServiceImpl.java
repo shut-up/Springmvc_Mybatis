@@ -52,4 +52,10 @@ public class ItemsServiceImpl implements ItemsService{
 		itemsMapper.updateByPrimaryKeyWithBLOBs(itemsCustom);
 	}
 
+	@Override
+	public void deleteItems(Integer[] items_id) throws Exception {
+		for(int i=0;i<items_id.length;i++)
+			itemsMapper.deleteByPrimaryKey(items_id[i]);
+	}
+
 }

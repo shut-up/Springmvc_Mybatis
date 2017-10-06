@@ -115,4 +115,16 @@ public class ItemsController {
 //		return "success";
 	}
 
+	
+	//批量删除，数组类型参数绑定，形参名必须与input的name的值一致
+	@RequestMapping("/deleteItems")
+	public String deleteItems(Integer[] items_id)throws Exception{
+		//批量删除
+		//...
+		//
+//		itemsService.deleteItems(items_id);//由于外键约束删除不成功，暂时搁置
+		System.out.println(items_id.length);
+		return "items/itemsList";
+		
+	}
 }

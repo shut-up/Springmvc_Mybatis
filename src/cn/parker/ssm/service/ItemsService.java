@@ -16,4 +16,7 @@ public interface ItemsService {
 	
 	//根据id更新商品信息,id:需要修改商品 的id，itemsCustom需要更新的商品的信息
 	public void updateItems(Integer id,ItemsCustom itemsCustom)throws Exception;
+	
+	//根据id更新商品信息,id:需要修改商品 的id，itemsCustom需要更新的商品的信息
+	public void deleteItems(Integer[] items_id)throws Exception;
 }
