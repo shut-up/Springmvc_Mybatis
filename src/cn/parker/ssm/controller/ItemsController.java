@@ -10,6 +10,9 @@ import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -94,15 +97,33 @@ public class ItemsController {
 	}
 
 	
-	@RequestMapping("/editItemsSubmit")
+	
 	/*
 	 * pojo类型的参数绑定，绑定成功的前提是，页面中input的name的值与pojo中的属性值一致 ，如
 	 * input name="id"，则ItemsCustom必须有id属性
 	 *  Integer id为简单类型的参数绑定， ItemsCustom itemsCustom为pojo类型参数绑定
 	 * 形参中pojo对象的属性中有日期类型createtime，需要自定义参数绑定
 	 */
-	public String editItemsSubmit(HttpServletRequest request, Integer id, ItemsCustom itemsCustom) throws Exception {
+	//在需要校验的pojo前边添加@Validated，在需要校验的pojo后边添加BindingResult bindingResult接收校验出错信息
+	//注意：@Validated和BindingResult bindingResult是配对出现，并且形参顺序是固定的（一前一后）。
+	@RequestMapping("/editItemsSubmit")
+	public String editItemsSubmit(HttpServletRequest request,Model model, Integer id,@Validated ItemsCustom itemsCustom,BindingResult bindingResult) throws Exception {
 
+		//判断是否有错误信息
+		if(bindingResult.hasErrors()){
+			  //获取所有错误信息
+			  List<ObjectError> allErrors = bindingResult.getAllErrors();
+			  //输出错误信息
+			  for(ObjectError objectError : allErrors){
+				  System.out.println(objectError.getDefaultMessage());
+			  }
+			  //将错误信息传到页面
+			  model.addAttribute("allErrors", allErrors);
+			  //有错误信息则重新返回到此页
+			  return "items/editItems";
+		}
+		
+		
 		// 解决post乱码，在web.xml文件中配置乱码过滤器
 		itemsService.updateItems(id, itemsCustom);
 
