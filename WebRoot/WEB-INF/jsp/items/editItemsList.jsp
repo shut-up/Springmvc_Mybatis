@@ -8,8 +8,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>查询商品列表</title>
 <script type="text/javascript">
-	function delete_items(){
-		document.itemsForm.action="${pageContext.request.contextPath }/items/deleteItems.action";
+	function editItemsAllSubmit(){
+		document.itemsForm.action="${pageContext.request.contextPath }/items/editItemsAllSubmit.action";
 		document.itemsForm.submit();
 	}
 	function query_items(){
@@ -26,29 +26,25 @@
 <tr>
 <td><input name="itemsCustom.name"/></td>
 <td><input type="button" value="查询" onclick="query_items()"/></td>
-<td><input type="button" value="批量删除" onclick="delete_items()"/></td>
+<td><input type="button" value="批量修改" onclick="editItemsAllSubmit()"/></td>
 </tr>
 </table>
 商品列表：
 <table width="100%" border=1>
 <tr>
-	<td>选择删除</td>
 	<td>商品名称</td>
 	<td>商品价格</td>
 	<td>生产日期</td>
 	<td>商品描述</td>
 	<td>操作</td>
 </tr>
-<c:forEach items="${itemsList }" var="item">
+<c:forEach items="${itemsList }" var="item" varStatus="status">
 <tr>
-	<td><input type="checkbox" name="items_id" value="${item.id}"/></td>
-	<td>${item.getName() }</td>
-	<td>${item.price }</td>
-	<td><fmt:formatDate value="${item.createtime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-	<td>${item.detail }</td>
+	<td><input name="edititemsList[${status.index }].name" value="${item.name }"/></td>
+	<td><input name="edititemsList[${status.index }].price" value="${item.price }"/></td>
+	<td><input name="edititemsList[${status.index }].createtime" value="<fmt:formatDate value="${item.createtime}" pattern="yyyy-MM-dd HH:mm:ss"/>"/></td>
+	<td><input name="edititemsList[${status.index }].detail" value="${item.detail }"/></td>
 	
-	<td><a href="${pageContext.request.contextPath }/items/editItems.action?id=${item.id}">修改</a></td>
-
 </tr>
 </c:forEach>
 
