@@ -19,9 +19,12 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -72,7 +75,20 @@ public class ItemsController {
 
 		return modelAndView;
 	}
+	
+	//查询商品信息，输出json(RESTful的支持，需要在web.xml中配置rest的前端控制器)
+	//itemsView/{id}中的{id}表示占位符，表示将这个位置的参数传递到@PathVariable("id")指定的id参数中
+	//如果占位符中的参数名称与形参名称一致，可以不通过@PathVariable指定
+	@RequestMapping("itemsView/{id}")
+	public @ResponseBody ItemsCustom itemsView(@PathVariable("id") Integer id) throws Exception{
+		
+		//调用service查询商品信息
+		ItemsCustom itemsCustom = itemsService.findItemsById(id);
+		
+		return itemsCustom;
+	}
 
+	
 /*	// @RequestMapping("/editItems")
 	 //限制请求方法为post和get(如果限制方法为post方法则会报错，因为这里请求为get方法)
 	 @RequestMapping(value="/editItems",method={RequestMethod.POST,RequestMethod.GET})
