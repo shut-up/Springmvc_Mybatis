@@ -17,8 +17,8 @@
 	<context:component-scan base-package="cn.parker.ssm.controller"></context:component-scan>
 	
 	<!-- 静态资源解析 -->
-	<mvc:resources location="/js/" mapping="/js/**"/>
-	<mvc:resources location="/img/" mapping="/img/**"/>
+	<mvc:resources location="/js/" mapping="/WEB-INF/js/**"/>
+	<mvc:resources location="/img/" mapping="/WEB-INF/img/**"/>
 
 	<!-- 注解的处理器适配器 -->
 	<!-- <bean
