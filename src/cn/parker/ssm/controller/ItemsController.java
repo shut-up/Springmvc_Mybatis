@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.parker.ssm.controller.validtorGroup.ValidGroup1;
+import cn.parker.ssm.exception.CustomException;
 import cn.parker.ssm.po.Items;
 import cn.parker.ssm.po.ItemsCustom;
 import cn.parker.ssm.po.ItemsQueryVo;
@@ -102,6 +103,10 @@ public class ItemsController {
 	public String editItems(Model model,@RequestParam(value = "id", required = true, defaultValue = "1") Integer items_id) throws Exception {
 
 		ItemsCustom itemsCustom = itemsService.findItemsById(items_id);
+		
+		if(itemsCustom == null){
+			throw new CustomException("所需要修改的商品不存在！");
+		}
 
 		// 相当于modelAndView.addObject方法
 		model.addAttribute("items", itemsCustom);
