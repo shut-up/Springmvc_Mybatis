@@ -68,5 +68,7 @@
 		<property name="cacheSeconds" value="120" />
 	</bean>
 	
+	<!-- 全局异常处理器,实现了HandlerExceptionResolver就是全局异常处理器 -->
+	<bean class="cn.parker.ssm.exception.CustomExceptionResolver"></bean>
 
 </beans>
