@@ -99,7 +99,7 @@ public class ItemsController {
 	 * required：指定参数是否必须传入
 	 * defaultValue：如果没有参数传入时，使用默认值
 	 */
-	public String editItems(Model model,@RequestParam(value = "id", required = true, defaultValue = "") Integer items_id) throws Exception {
+	public String editItems(Model model,@RequestParam(value = "id", required = true, defaultValue = "1") Integer items_id) throws Exception {
 
 		ItemsCustom itemsCustom = itemsService.findItemsById(items_id);
 
@@ -137,6 +137,7 @@ public class ItemsController {
 			  }
 			  //将错误信息传到页面
 			  model.addAttribute("allErrors", allErrors);
+			  
 			  //直接使用model将pojo回显到页面
 			  model.addAttribute("items", itemsCustom);
 			  //有错误信息则重新返回到此页
