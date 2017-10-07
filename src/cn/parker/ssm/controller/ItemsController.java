@@ -1,9 +1,11 @@
 package cn.parker.ssm.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.parker.ssm.controller.validtorGroup.ValidGroup1;
@@ -29,6 +32,7 @@ import cn.parker.ssm.po.ItemsCustom;
 import cn.parker.ssm.po.ItemsQueryVo;
 import cn.parker.ssm.service.ItemsService;
 import cn.parker.ssm.service.impl.ItemsServiceImpl;
+import javassist.expr.NewArray;
 
 @Controller
 // 为了对url进行分类管理，可以在这定义根路径，最终访问url为根路径+子路径，如：查询商品列表路径为/items/qureyItems.action
@@ -131,7 +135,9 @@ public class ItemsController {
 	//  @ModelAttribute还可以将方法返回值传到页面（本类中第一个方法）
 	@RequestMapping("/editItemsSubmit")
 	public String editItemsSubmit(HttpServletRequest request,Model model, Integer id,
-			@ModelAttribute("items") @Validated(value={ValidGroup1.class}) ItemsCustom itemsCustom,BindingResult bindingResult) throws Exception {
+			@ModelAttribute("items") @Validated(value={ValidGroup1.class}) ItemsCustom itemsCustom,BindingResult bindingResult,
+			MultipartFile items_pic//接收商品的图片
+			) throws Exception {
 
 		//判断是否有错误信息
 		if(bindingResult.hasErrors()){
@@ -150,6 +156,23 @@ public class ItemsController {
 			  return "items/editItems";
 		}
 		
+		//上传图片的原始名称
+		String originalFilename = items_pic.getOriginalFilename();
+		//上传图片
+		if(items_pic!=null && originalFilename!=null && originalFilename.length()>0){
+			
+			//存储图片的物理路径
+			String pic_path = "F:\\develop\\upload\\temp\\";
+			
+			//新的图片名称（uuid随机数+原始名称后缀名）
+			String newfileName = UUID.randomUUID() + originalFilename.substring(originalFilename.lastIndexOf("."));
+			//新的图片
+			File newFile = new File(pic_path+newfileName);
+			//将内存中的数据写入磁盘
+			items_pic.transferTo(newFile);
+			//将新的图片名称写到itemsCustom中
+			itemsCustom.setPic(newfileName);
+		}
 		
 		// 解决post乱码，在web.xml文件中配置乱码过滤器
 		itemsService.updateItems(id, itemsCustom);
