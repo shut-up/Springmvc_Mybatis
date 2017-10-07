@@ -6,6 +6,7 @@ import org.aspectj.weaver.Utils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import cn.parker.ssm.exception.CustomException;
 import cn.parker.ssm.mapper.ItemsMapper;
 import cn.parker.ssm.mapper.ItemsMapperCustom;
 import cn.parker.ssm.po.Items;
@@ -32,7 +33,10 @@ public class ItemsServiceImpl implements ItemsService{
 		
 		Items items = itemsMapper.selectByPrimaryKey(id);
 		
-		
+		//在service中进行异常测试
+		if(items==null){
+			throw new CustomException("所需要修改的商品不存在！");
+		}
 		
 		//还有许多对商品信息进行业务处理
 		//.....
