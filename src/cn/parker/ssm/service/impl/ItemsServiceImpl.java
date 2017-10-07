@@ -31,6 +31,9 @@ public class ItemsServiceImpl implements ItemsService{
 	public ItemsCustom findItemsById(Integer id) throws Exception {
 		
 		Items items = itemsMapper.selectByPrimaryKey(id);
+		
+		
+		
 		//还有许多对商品信息进行业务处理
 		//.....
 		//返回ItemsCustom

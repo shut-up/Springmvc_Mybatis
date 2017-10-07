@@ -104,6 +104,7 @@ public class ItemsController {
 
 		ItemsCustom itemsCustom = itemsService.findItemsById(items_id);
 		
+		//在controller中进行异常测试
 		if(itemsCustom == null){
 			throw new CustomException("所需要修改的商品不存在！");
 		}
