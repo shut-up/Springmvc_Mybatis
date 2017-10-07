@@ -82,5 +82,20 @@
 			<value>5242880</value>
 		</property>
 	</bean>
+	
+	
+	<!--拦截器 -->
+	<mvc:interceptors>
+	<!--多个拦截器,顺序执行 -->
+	<mvc:interceptor>
+		<!-- /**表示所有url包括子url的路径 -->
+		<mvc:mapping path="/**"/>
+		<bean class="cn.parker.ssm.interceptor.handlerInterceptor1"></bean>
+	</mvc:interceptor>
+	<mvc:interceptor>
+		<mvc:mapping path="/**"/>
+		<bean class="cn.parker.ssm.interceptor.handlerInterceptor2"></bean>
+	</mvc:interceptor>
+</mvc:interceptors>
 
 </beans>
